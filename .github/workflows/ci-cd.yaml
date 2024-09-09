@@ -70,12 +70,12 @@ jobs:
           ssh -i regtech.pem -o StrictHostKeyChecking=no ec2-user@$EC2_PRIVATE_IP << 'EOF'
 
             # Create AWS config and credentials files
-            mkdir -p ~/.aws
-            echo "[default]" > ~/.aws/config
-            echo "region = $AWS_REGION" >> ~/.aws/config
-            echo "[default]" > ~/.aws/credentials
-            echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
-            echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+            # mkdir -p ~/.aws
+            # echo "[default]" > ~/.aws/config
+            # echo "region = $AWS_REGION" >> ~/.aws/config
+            # echo "[default]" > ~/.aws/credentials
+            # echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+            # echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
 
             kubectl apply -f /home/ec2-user/deployment.yaml --validate=false
             kubectl apply -f /home/ec2-user/service.yaml --validate=false
