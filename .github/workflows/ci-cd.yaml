@@ -49,6 +49,9 @@ jobs:
           EC2_PRIVATE_IP: ${{ secrets.EC2_PRIVATE_IP }} # Set your EC2 instance's private IP as secret
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} # Set your SSH private key as a secret
           SSH_USER: "ec2-user" # Adjust if you're using a different user
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Your IAM user access key
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Your IAM user secret key
+          AWS_REGION: "us-east-1" # Replace with your preferred AWS region
         run: |
           echo "$SSH_PRIVATE_KEY" > regtech.pem
           chmod 600 regtech.pem
@@ -65,6 +68,15 @@ jobs:
           chmod 600 regtech.pem
         
           ssh -i regtech.pem -o StrictHostKeyChecking=no ec2-user@$EC2_PRIVATE_IP << 'EOF'
+
+            # Create AWS config and credentials files
+            mkdir -p ~/.aws
+            echo "[default]" > ~/.aws/config
+            echo "region = $AWS_REGION" >> ~/.aws/config
+            echo "[default]" > ~/.aws/credentials
+            echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> ~/.aws/credentials
+            echo "aws_secret_access_key = $AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+
             kubectl apply -f /home/ec2-user/deployment.yaml --validate=false
             kubectl apply -f /home/ec2-user/service.yaml --validate=false
           EOF
