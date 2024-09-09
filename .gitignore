@@ -1,0 +1,31 @@
+# Terraform files
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+.terraform/
+
+# Ignore Terraform provider binaries
+terraform/.terraform/
+
+.terraform.lock.hcl
+
+# Ignore plan files
+*.tfplan
+
+# Ignore Terraform CLI configuration files
+*.tfignore
+
+# Ignore any IDE/editor specific files
+.idea/
+.vscode/
+*.swp
+*~
+
+# Ignore sensitive files
+*.pem
+*.p12
+*.key
+
+# Ignore logs
+*.log
