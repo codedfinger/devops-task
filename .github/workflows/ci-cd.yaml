@@ -65,6 +65,6 @@ jobs:
           chmod 600 regtech.pem
         
           ssh -i regtech.pem -o StrictHostKeyChecking=no ec2-user@$EC2_PRIVATE_IP << 'EOF'
-            kubectl apply -f /home/ec2-user/deployment.yaml
-            kubectl apply -f /home/ec2-user/service.yaml
+            kubectl apply -f /home/ec2-user/deployment.yaml --validate=false
+            kubectl apply -f /home/ec2-user/service.yaml --validate=false
           EOF
